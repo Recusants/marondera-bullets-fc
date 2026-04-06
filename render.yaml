@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: marondera-bullets-fc
+    runtime: image
+    repo: https://github.com/YOUR_USERNAME/marondera-bullets-fc
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: DB_HOST
+        value: your_mysql_host_here
+      - key: DB_USER
+        value: your_mysql_user
+      - key: DB_PASS
+        value: your_mysql_password
+      - key: DB_NAME
+        value: bullets_fc
+      - key: APACHE_PORT
+        value: 80
