@@ -1,12 +1,9 @@
 <?php
+require_once 'config.php';
 session_start();
 
-$db_host = 'localhost';
-$db_user = 'root';
-$db_pass = '';
-$db_name = 'bullets_fc';
-$conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-$conn->select_db($db_name);
+// Get database connection from config.php
+$conn = getDBConnection();
 
 // Handle login
 if (isset($_POST['login'])) {
@@ -116,7 +113,10 @@ $league = $conn->query("SELECT * FROM league_standings ORDER BY position");
         </form>
         <p style="margin-top: 16px; font-size: 12px; color: #666;">Username: admin | Password: admin123</p>
     </div>
-    <?php else: ?>
+    <?php else: 
+        $matches = $conn->query("SELECT * FROM matches ORDER BY match_date DESC");
+        $league = $conn->query("SELECT * FROM league_standings ORDER BY position");
+    ?>
     <div class="header">
         <h1><i class="fas fa-futbol"></i> Marondera Bullets - Admin</h1>
         <a href="?logout=1" style="color:white; background:rgba(255,255,255,0.2); padding:10px 20px; border-radius:30px; text-decoration:none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
