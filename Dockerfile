@@ -28,8 +28,14 @@ COPY . /var/www/html/
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html && \
-    chmod -R 755 /var/www/html && \
-    chmod -R 777 /var/www/html/tmp 2>/dev/null || true
+    chmod -R 755 /var/www/html
+
+# IMPORTANT: Enable environment variable passthrough for Apache
+RUN echo "PassEnv DB_HOST" >> /etc/apache2/conf-available/environment.conf && \
+    echo "PassEnv DB_USER" >> /etc/apache2/conf-available/environment.conf && \
+    echo "PassEnv DB_PASS" >> /etc/apache2/conf-available/environment.conf && \
+    echo "PassEnv DB_NAME" >> /etc/apache2/conf-available/environment.conf && \
+    a2enconf environment
 
 # Expose port 80
 EXPOSE 80
